@@ -6,11 +6,13 @@ class DyEnemy : public Enemy {
         float angle = 135;
         float aimAngle = 225;
         bool loop = false;
+        bool enemie_chooser;
 
     public:
         DyEnemy(float x, float y) : Enemy(x, y) { 
             this->cooldown = GetRandomValue(90, 300);
             this->health = 1; 
+            enemie_chooser = GetRandomValue(0,1);
         }
 
         void draw() override;
