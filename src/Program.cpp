@@ -159,7 +159,6 @@ void Program::KeyInputs() {
     if (IsKeyPressed('K')) {
         score += 500;
     }
-    int lastScore = 0
     if (score - lastScore >= 1000) {
         if (lives < 5) {
             lives++;
