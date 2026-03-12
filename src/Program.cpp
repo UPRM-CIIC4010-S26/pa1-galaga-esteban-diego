@@ -57,7 +57,7 @@ void Program::Update() {
 
         for (Projectile& p : Projectile::projectiles) { 
             p.update(); 
-            if ((p.ID != 0) && (HitBox::Collision(player->hitBox, p.getHitBox()))) {
+            if ((p.ID != 0) && (Hitbox::Collision(player->hitBox, p.hitBox))) {
                 PlayerReset();
                 break;
             }
@@ -156,6 +156,17 @@ void Program::KeyInputs() {
     if (!paused && !startup && IsKeyPressed('O')) gameOver = !gameOver;
     if (!gameOver && !paused && IsKeyPressed('I')) startup = !startup;
     if (IsKeyPressed('H')) HitBox::drawHitbox = !HitBox::drawHitbox;
+    if (IsKeyPressed('K')) {
+        score += 500;
+    }
+    int lastScore = 0
+    if (score - lastScore >= 1000) {
+        if (lives < 5) {
+            lives++;
+        }
+        lastScore += 1000;
+    }
+
     
     if (gameOver && IsKeyPressed(KEY_ENTER)) {
         gameOver = false;
@@ -186,7 +197,10 @@ void Program::Reset() {
     Enemy::enemies.clear();
     StdEnemy::attackInProgress = false;
     player = new Player((GetScreenWidth() / 2) - 15, GetScreenHeight() * 0.75f);
-    respawnCooldown = 1080;
+    respawnCooldown = 1080 - (score * 0.5f);
+    if (respawnCooldown < 200) {
+        respawnCooldown = 200;
+    }
     respawns = 0;
     count = 0;
     delay = 0;
